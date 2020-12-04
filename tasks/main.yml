@@ -12,7 +12,7 @@
 - name: Customise vim - .vim file from url
   get_url:
     url: "{{ url }}"
-    dest: "~{{ ansible_user }}/.vim/colors/{{ name }}.vim"
+    dest: "~{{ ansible_user }}/.vim/colors/{{ colo_name }}.vim"
     owner: "{{ ansible_user }}"
     group: "{{ ansible_user }}"
     mode: '0444'
@@ -23,7 +23,7 @@
     owner: "{{ ansible_user }}"
     group: "{{ ansible_user }}"
     content: |
-      colo {{ name }}
+      colo {{ colo_name }}
       syntax on
     mode: '0644'
 
