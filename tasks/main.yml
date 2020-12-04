@@ -1,0 +1,60 @@
+---
+# Customise the colours on WSL
+
+- name: Directory - ~/.vim/colors
+  file:
+    path: "~{{ ansible_user }}/.vim/colors"
+    owner: "{{ ansible_user }}"
+    group: "{{ ansible_user }}"
+    state: directory
+    mode: '0755'
+
+- name: Customise vim - .vim file from url
+  get_url:
+    url: "{{ url }}"
+    dest: "~{{ ansible_user }}/.vim/colors/{{ name }}.vim"
+    owner: "{{ ansible_user }}"
+    group: "{{ ansible_user }}"
+    mode: '0444'
+
+- name: Create ~/.vimrc
+  copy:
+    dest: "~{{ ansible_user }}/.vimrc"
+    owner: "{{ ansible_user }}"
+    group: "{{ ansible_user }}"
+    content: |
+      colo {{ name }}
+      syntax on
+    mode: '0644'
+
+- name: Create .dircolors if absent
+  command: /usr/bin/dircolors --print-database > ~{{ ansible_user }}/.dircolors
+  args:
+    creates: ~{{ ansible_user }}/.dircolors
+
+- name: Set .dircolors permissions
+  file:
+    path: ~{{ ansible_user }}/.dircolors
+    owner: "{{ ansible_user }}"
+    group: "{{ ansible_user }}"
+    mode: '0644'
+
+- name: Set sticky other writable
+  lineinfile:
+    path: ~{{ ansible_user }}/.dircolors
+    regexp: '^STICKY_OTHER_WRITABLE'
+    line: STICKY_OTHER_WRITABLE {{ sticky_other_writable }} # dir that is sticky and other-writable (+t,o+w)
+    owner: "{{ ansible_user }}"
+    group: "{{ ansible_user }}"
+    mode: '0644'
+
+- name: Set other writable
+  lineinfile:
+    path: ~{{ ansible_user }}/.dircolors
+    regexp: '^OTHER_WRITABLE'
+    line: OTHER_WRITABLE {{ other_writable }} # dir that is other-writable (o+w) and not sticky
+    owner: "{{ ansible_user }}"
+    group: "{{ ansible_user }}"
+    mode: '0644'
+
+...
