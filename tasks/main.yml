@@ -28,7 +28,7 @@
     mode: '0644'
 
 - name: Create .dircolors if absent
-  command: /usr/bin/dircolors --print-database > ~{{ ansible_user }}/.dircolors
+  shell: /usr/bin/dircolors --print-database > ~{{ ansible_user }}/.dircolors
   args:
     creates: ~{{ ansible_user }}/.dircolors
 
