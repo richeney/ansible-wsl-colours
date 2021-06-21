@@ -1,33 +1,31 @@
-# Set vi and ls colours in a Windows System for Linux (WSL) Ubuntu environment.
+# Installs Packer
 
-Ansible role to set the colours for either Ubuntu 16.04 (xenial), 18.04 (bionic) or 20.04 (focal).
+Ansible role to download Packer on Ubuntu 16.04 (xenial), 18.04 (bionic) or 20.04 (focal).
 
-Creates and configures the following in the user's home directory:
 
-* .vimrc
-* .vim/colors/cloudshell.vim
-* .dircolors
+The Hashicorp releases API will be queried for the latest stable Packer binary.
+
+The binary will then be downloaded to /usr/local/bin retaining the version number.
+
+A /usr/local/bin/terraform symbolic link will point at the latest binary.
+
 
 ## Installation
 
-`ansible-galaxy install richeney.wsl_colours`
+`ansible-galaxy install richeney.packer`
 
 ## Example Playbook
 
 ```yaml
 - hosts: all
   roles:
-    - richeney.wsl_colours
+    - richeney.packer
 ```
 
 ## Requirements
 
 None.
 
-## Warning
-
-Will automatically set the user and group to the ansible_user. WSL creates a user and sets the primary group to the same name.
-
 ## Dependencies
 
-None.
+The zip package will be installed if not present.
