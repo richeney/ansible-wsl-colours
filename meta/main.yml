@@ -5,13 +5,14 @@ galaxy_info:
   description: Colour customisations for Ubuntu on WSL.
   company: "None"
   license: "MIT"
-  min_ansible_version: 2.4
+  min_ansible_version: "2.4"
   platforms:
   - name: Ubuntu
     versions:
       - xenial
       - bionic
       - focal
+      - jammy
   galaxy_tags:
     - wsl
     - colours
