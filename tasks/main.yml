@@ -3,58 +3,58 @@
 
 - name: Directory - ~/.vim/colors
   file:
-    path: "~{{ ansible_user }}/.vim/colors"
-    owner: "{{ ansible_user }}"
-    group: "{{ ansible_user }}"
+    path: "~{{ ansible_user_id }}/.vim/colors"
+    owner: "{{ ansible_user_id }}"
+    group: "{{ ansible_user_id }}"
     state: directory
     mode: '0755'
 
 - name: Customise vim - .vim file from url
   get_url:
     url: "{{ url }}"
-    dest: "~{{ ansible_user }}/.vim/colors/{{ colo_name }}.vim"
-    owner: "{{ ansible_user }}"
-    group: "{{ ansible_user }}"
+    dest: "~{{ ansible_user_id }}/.vim/colors/{{ colo_name }}.vim"
+    owner: "{{ ansible_user_id }}"
+    group: "{{ ansible_user_id }}"
     mode: '0444'
 
 - name: Create ~/.vimrc
   copy:
-    dest: "~{{ ansible_user }}/.vimrc"
-    owner: "{{ ansible_user }}"
-    group: "{{ ansible_user }}"
+    dest: "~{{ ansible_user_id }}/.vimrc"
+    owner: "{{ ansible_user_id }}"
+    group: "{{ ansible_user_id }}"
     content: |
       colo {{ colo_name }}
       syntax on
     mode: '0644'
 
 - name: Create .dircolors if absent
-  shell: /usr/bin/dircolors --print-database > ~{{ ansible_user }}/.dircolors
+  shell: /usr/bin/dircolors --print-database > ~{{ ansible_user_id }}/.dircolors
   args:
-    creates: ~{{ ansible_user }}/.dircolors
+    creates: ~{{ ansible_user_id }}/.dircolors
 
 - name: Set .dircolors permissions
   file:
-    path: ~{{ ansible_user }}/.dircolors
-    owner: "{{ ansible_user }}"
-    group: "{{ ansible_user }}"
+    path: ~{{ ansible_user_id }}/.dircolors
+    owner: "{{ ansible_user_id }}"
+    group: "{{ ansible_user_id }}"
     mode: '0644'
 
 - name: Set sticky other writable
   lineinfile:
-    path: ~{{ ansible_user }}/.dircolors
+    path: ~{{ ansible_user_id }}/.dircolors
     regexp: '^STICKY_OTHER_WRITABLE'
     line: STICKY_OTHER_WRITABLE {{ sticky_other_writable }} # dir that is sticky and other-writable (+t,o+w)
-    owner: "{{ ansible_user }}"
-    group: "{{ ansible_user }}"
+    owner: "{{ ansible_user_id }}"
+    group: "{{ ansible_user_id }}"
     mode: '0644'
 
 - name: Set other writable
   lineinfile:
-    path: ~{{ ansible_user }}/.dircolors
+    path: ~{{ ansible_user_id }}/.dircolors
     regexp: '^OTHER_WRITABLE'
     line: OTHER_WRITABLE {{ other_writable }} # dir that is other-writable (o+w) and not sticky
-    owner: "{{ ansible_user }}"
-    group: "{{ ansible_user }}"
+    owner: "{{ ansible_user_id }}"
+    group: "{{ ansible_user_id }}"
     mode: '0644'
 
 ...
