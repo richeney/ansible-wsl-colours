@@ -15,7 +15,7 @@
     dest: "~{{ ansible_user_id }}/.vim/colors/{{ colo_name }}.vim"
     owner: "{{ ansible_user_id }}"
     group: "{{ ansible_user_id }}"
-    mode: '0444'
+    mode: '0644'
 
 - name: Create ~/.vimrc
   copy:
